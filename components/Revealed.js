@@ -1,11 +1,17 @@
-import { StyleSheet, Text, View, ScrollView, FlatList, } from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
+import bomb from '../assets/bomb_icon.png'; 
 
 const Revealed = ({
     item
 }) => {
     return (
         <View style={styles.container}>
-            <Text>{item}</Text>
+            {
+                item?
+                <Text>W</Text>
+                :
+                <Image source={bomb} style={styles.imageContainer}/>
+            }
         </View>
     );
 }
@@ -19,6 +25,10 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
+    imageContainer:{
+        width: 50,
+        height: 50,
+    }
 });
 
 export default Revealed;
