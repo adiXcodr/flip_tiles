@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, FlatList, ActivityIndicator, } from 'react-native';
 import CardItem from './CardItem';
-import { getRandomLayout } from '../utils/commonUtils';
+import { getRandomLayout, getRandomInt } from '../utils/commonUtils';
 import LivesComponent from './LivesComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChances, reduceChances, increaseChances, setGameStatus } from '../redux/actions/scoreActions';
@@ -13,7 +13,7 @@ const GameScreen = () => {
 
     const dispatch = useDispatch();
 
-    const [number, setNumber] = useState(null);
+    const [number, setNumber] = useState(String(getRandomInt()));
 
     const [layout, setLayout] = useState();
 
@@ -36,7 +36,7 @@ const GameScreen = () => {
     const startSetLayout = async () => {
         setResetting(true);
         await delay(100);
-        let rand_lay = getRandomLayout(dimension, number ? number : true);
+        let rand_lay = getRandomLayout(dimension, number);
         console.log("Random Layout is", rand_lay);
         setLayout(rand_lay);
         setResetting(false);
@@ -136,8 +136,8 @@ const styles = StyleSheet.create({
     },
     button: {
         elevation: 5,
-        marginVertical: 10,
-        width: "70%",
+        marginVertical: 20,
+        width: "90%",
     },
     inputContainer: {
         flexDirection: "row",

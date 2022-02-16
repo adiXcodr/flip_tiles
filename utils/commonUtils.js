@@ -2,6 +2,14 @@ const selectRandom = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
 
+function getRandomInt() {
+    let max = 50;
+    let min = 1;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const generateArray = (length, value = true) => {
     let arr = new Array(length).fill(value);
     return arr;
@@ -17,5 +25,6 @@ const getRandomLayout = (dimension, value = true) => {
 export {
     selectRandom,
     getRandomLayout,
-    generateArray
+    generateArray,
+    getRandomInt
 };
