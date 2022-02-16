@@ -7,10 +7,10 @@ const generateArray = (length, value = true) => {
     return arr;
 };
 
-const getRandomLayout = (dimension) => {
+const getRandomLayout = (dimension, value = true) => {
     let len = dimension * dimension;
     let layout = generateArray(len, false);
-    layout[Math.floor(Math.random() * len)] = true;
+    layout[Math.floor(Math.random() * len)] = value;
     return layout;
 }
 

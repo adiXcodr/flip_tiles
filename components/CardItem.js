@@ -14,13 +14,14 @@ const CardItem = ({
     layout,
     index,
     chancesLeft,
+    gameStatus,
     reset
 }) => {
 
     const dispatch = useDispatch();
 
     const handleFlip = () => {
-        if (chancesLeft > 0) {
+        if (chancesLeft > 0 && gameStatus == "Playing") {
             flipCard.flip();
             dispatch(reduceChances());
             if (layout[index]) {
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     cardContainer: {
+        // minWidth: '30%',
         minWidth: 100,
         minHeight: 100,
     },

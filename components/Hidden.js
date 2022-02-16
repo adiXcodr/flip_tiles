@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const Hidden = ({
-    handleFlip
+    handleFlip,
 }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={handleFlip}>

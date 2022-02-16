@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ScrollView, FlatList, ActivityIndicator, } from 'react-native';
 import CardItem from './CardItem';
 import { getRandomLayout } from '../utils/commonUtils';
 import LivesComponent from './LivesComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChances, reduceChances, increaseChances, setGameStatus } from '../redux/actions/scoreActions';
+import { TextInput, Button, Text, IconButton } from 'react-native-paper';
 
 const dimension = 3;
 
 const GameScreen = () => {
 
     const dispatch = useDispatch();
+
+    const [number, setNumber] = useState(null);
 
     const [layout, setLayout] = useState();
 
@@ -32,8 +35,8 @@ const GameScreen = () => {
 
     const startSetLayout = async () => {
         setResetting(true);
-        await delay(500);
-        let rand_lay = getRandomLayout(dimension);
+        await delay(100);
+        let rand_lay = getRandomLayout(dimension, number ? number : true);
         console.log("Random Layout is", rand_lay);
         setLayout(rand_lay);
         setResetting(false);
@@ -51,7 +54,7 @@ const GameScreen = () => {
 
     if (resetting) {
         return (
-            <View style={{ ...styles.container, marginTop: '100%' }}>
+            <View style={{ ...styles.container, justifyContent: 'center', alignItems: 'center' }}>
                 <ActivityIndicator size="large" color={'black'} />
                 <Text>Setting Up...</Text>
             </View>
@@ -70,13 +73,25 @@ const GameScreen = () => {
                             layout={layout}
                             index={index}
                             chancesLeft={chancesLeft}
+                            gameStatus={gameStatus}
                             reset={reset}
                         />
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={dimension}
+                    contentContainerStyle={styles.grid}
+                    columnWrapperStyle={styles.columnWrapperStyle}
                     ListHeaderComponent={
-                        <View>
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={text => setNumber(text)}
+                                value={number}
+                                label="Enter the number"
+                                keyboardType="numeric"
+                                mode='outlined'
+                                right={<TextInput.Icon name="chevron-right" onPress={reset} />}
+                            />
                             <LivesComponent />
                         </View>
                     }
@@ -91,10 +106,13 @@ const GameScreen = () => {
                             <View
                                 style={styles.button}>
                                 <Button
+                                    icon="refresh"
+                                    mode="contained"
                                     onPress={reset}
-                                    title={gameStatus == "Won" || gameStatus == "Lost" ? "Play Again" : "Reset Board"}
                                     color="#be4a6f"
-                                />
+                                >
+                                    {gameStatus == "Won" || gameStatus == "Lost" ? "Play Again" : "Reset Board"}
+                                </Button>
                             </View>
                         </View>
                     }
@@ -107,7 +125,9 @@ const GameScreen = () => {
 const styles = StyleSheet.create({
     container: {
         marginTop: 20,
-        flex: 1
+        flex: 1,
+        width: '100%',
+        paddingHorizontal: '5%',
     },
     text: {
         fontSize: 20,
@@ -117,8 +137,22 @@ const styles = StyleSheet.create({
     button: {
         elevation: 5,
         marginVertical: 10,
-        width: "50%",
-    }
+        width: "70%",
+    },
+    inputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 20,
+        marginHorizontal: '5%',
+    },
+    input: {
+        width: '50%',
+    },
+    grid: {
+        width: '100%',
+    },
+    columnWrapperStyle: { justifyContent: 'center' },
 });
 
 export default GameScreen;

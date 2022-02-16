@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
         height: "40%",
     },
     text: {
-        color: "white"
+        color: "white",
+        fontSize: 20
     }
 });
 

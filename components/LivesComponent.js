@@ -6,6 +6,7 @@ import emptyheart from '../assets/emptyheart.png'
 import { generateArray } from '../utils/commonUtils';
 
 const LivesComponent = ({
+    style = {}
 }) => {
     const [lives, setLives] = useState([]);
     const chancesLeft = useSelector((state) => state.score.chancesLeft);
@@ -16,22 +17,13 @@ const LivesComponent = ({
     }, [chancesLeft]);
 
     return (
-        <View style={styles.container}>
+        <View>
             {lives && lives.length > 0 ?
-                <FlatList
-                    data={lives}
-                    renderItem={({ item, index }) => (
-                        <View>
-                            <Image key={String(index)} source={heart} style={styles.imageContainer} />
-                        </View>
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                    horizontal
-                    contentContainerStyle={styles.lives}
-                />
+                <View style={styles.lives}>
+                    {lives.map((item, index) => <Image key={String(index)} source={heart} style={styles.imageContainer} />)}
+                </View>
                 :
                 <View style={styles.imageContainer}>
-
                 </View>
             }
         </View>
@@ -39,14 +31,10 @@ const LivesComponent = ({
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        width: 100,
-        alignSelf: "flex-end",
-        marginVertical: 20
-    },
     lives: {
+        display: "flex",
         flexDirection: "row",
+        justifyContent: 'flex-end',
     },
     imageContainer: {
         width: 30,
