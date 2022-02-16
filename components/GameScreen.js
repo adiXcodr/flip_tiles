@@ -6,6 +6,7 @@ import LivesComponent from './LivesComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChances, reduceChances, increaseChances, setGameStatus } from '../redux/actions/scoreActions';
 import { TextInput, Button, Text, IconButton } from 'react-native-paper';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
 const dimension = 3;
 
@@ -35,7 +36,7 @@ const GameScreen = () => {
 
     const startSetLayout = async () => {
         setResetting(true);
-        await delay(100);
+        await delay(10);
         let rand_lay = getRandomLayout(dimension, number);
         console.log("Random Layout is", rand_lay);
         setLayout(rand_lay);
@@ -100,7 +101,7 @@ const GameScreen = () => {
                             alignItems: "center"
                         }}>
                             {gameStatus == "Won" || gameStatus == "Lost" ?
-                                <Text style={styles.text}>Game {gameStatus}</Text>
+                                <Text style={{ ...styles.text, color: gameStatus == "Won" ? "green" : "red" }}>Game {gameStatus}</Text>
                                 :
                                 null}
                             <View
@@ -117,6 +118,12 @@ const GameScreen = () => {
                         </View>
                     }
                 />
+
+                {gameStatus == "Won" ?
+                    <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
+                    :
+                    null}
+
             </View>
         );
     }
@@ -130,9 +137,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: '5%',
     },
     text: {
-        fontSize: 20,
+        fontSize: 25,
+        textTransform: "uppercase",
         fontWeight: '700',
-        marginVertical: 10
+        marginTop: 10
     },
     button: {
         elevation: 5,
