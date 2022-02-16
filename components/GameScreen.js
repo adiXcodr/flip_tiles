@@ -120,7 +120,7 @@ const GameScreen = () => {
                 />
 
                 {gameStatus == "Won" ?
-                    <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
+                    <ConfettiCannon count={100} origin={{ x: -10, y: 0 }} />
                     :
                     null}
 
