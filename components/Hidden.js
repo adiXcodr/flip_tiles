@@ -5,20 +5,23 @@ const Hidden = ({
 }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={handleFlip}>
-            <Text>Tap</Text>
+            <Text style={styles.text}>Tap</Text>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'red',
+        backgroundColor: '#212858',
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 3,
+        elevation: 5,
         width: 100,
         height: 100,
     },
+    text:{
+        color:"white"
+    }
 });
 
 export default Hidden;

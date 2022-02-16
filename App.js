@@ -1,13 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from "react-redux";
 import GameScreen from './components/GameScreen';
+import store from './redux/store';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <GameScreen />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <GameScreen />
+      </View>
+    </Provider>
   );
 };
 

@@ -1,15 +1,38 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Vibration } from 'react-native';
 import CardFlip from 'react-native-card-flip';
 import Hidden from './Hidden';
 import Revealed from './Revealed';
 import { selectRandom } from '../utils/commonUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import { setChances, reduceChances, increaseChances, setGameStatus } from '../redux/actions/scoreActions';
 
 const rotateModes = ['x', 'y'];
 
 const CardItem = ({
-    item
+    item,
+    layout,
+    index,
+    chancesLeft,
+    reset
 }) => {
+
+    const dispatch = useDispatch();
+
+    const handleFlip = () => {
+        if (chancesLeft > 0) {
+            flipCard.flip();
+            dispatch(reduceChances());
+            if (layout[index]) {
+                console.log('Game Won')
+                dispatch(setGameStatus("Won"));
+            }
+            else {
+                Vibration.vibrate();
+            }
+        }
+    };
+
     let flipCard = useRef();
 
     return (
@@ -19,7 +42,7 @@ const CardItem = ({
                 ref={(card) => flipCard = card}
                 flipDirection={selectRandom(rotateModes)}
             >
-                <Hidden handleFlip={() => flipCard.flip()} />
+                <Hidden handleFlip={handleFlip} />
                 <Revealed item={item} />
             </CardFlip>
         </View>
