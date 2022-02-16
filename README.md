@@ -1,4 +1,7 @@
-<h3 align="center">Tiles Flip</h3>
+<div align="center" class="row">
+  <img src="tilerr.png" width="200"/>
+</div>
+<h3 align="center">Tilerr - A Puzzle Game</h3>
 <br>
 
 ## Technologies used
